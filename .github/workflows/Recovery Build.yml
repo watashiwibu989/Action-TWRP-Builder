@@ -152,6 +152,8 @@ jobs:
         mka delta_generator -j$(nproc --all)
         ls $HOST_OUT_EXECUTABLES
         ls ${ANDROID_HOST_OUT}/llinux-x86/bin
+        ls out/soong/host/linux-x86
+        7z a SOONG_HOST_OUT.zip out/soong/host/linux-x86
         #lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
         #7z a ANDROID_HOST_OUT.zip $ANDROID_HOST_OUT
         #7z a HOST_OUT_EXECUTABLES.zip $HOST_OUT_EXECUTABLES
@@ -165,7 +167,7 @@ jobs:
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_TARGET }}.img
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*vendor*.img
-          #workspace/ANDROID_HOST_OUT.zip
+          workspace/SOONG_HOST_OUT.zip
           #workspace/HOST_OUT_EXECUTABLES.zip
           #workspace/HOST_OUT_SHARED_LIBRARIES.zip
         name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
