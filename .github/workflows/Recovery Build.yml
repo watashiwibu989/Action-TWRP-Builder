@@ -149,12 +149,13 @@ jobs:
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
         lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean
-        make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
-        mka delta_generator -j$(nproc --all)
+        #make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
+        mka update_engine -j$(nproc --all)
+        7z a update_engine.zip out/target/product/rosemary/system
         #ls $HOST_OUT_EXECUTABLES
         #ls ${ANDROID_HOST_OUT}/llinux-x86/bin
-        ls out/host/linux-x86/bin
-        7z a HOST_OUT.zip out/host/linux-x86/bin out/host/linux-x86/lib64
+        #ls out/host/linux-x86/bin
+        #7z a HOST_OUT.zip out/host/linux-x86/bin out/host/linux-x86/lib64
         #lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
         #7z a ANDROID_HOST_OUT.zip $ANDROID_HOST_OUT
         #7z a HOST_OUT_EXECUTABLES.zip $HOST_OUT_EXECUTABLES
@@ -168,7 +169,8 @@ jobs:
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/${{ github.event.inputs.BUILD_TARGET }}.img
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*.zip
           workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/*vendor*.img
-          workspace/HOST_OUT.zip
+          workspace/update_engine.zip
+          #workspace/HOST_OUT.zip
           #workspace/HOST_OUT_EXECUTABLES.zip
           #workspace/HOST_OUT_SHARED_LIBRARIES.zip
         name: ${{ github.event.inputs.DEVICE_NAME }}-${{ github.run_id }}
